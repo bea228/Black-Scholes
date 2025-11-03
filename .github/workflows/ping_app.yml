@@ -1,0 +1,14 @@
+name: Ping Streamlit App
+
+on:
+  schedule:
+    - cron: "0 */12 * * *"  # Every 12 hours
+  workflow_dispatch:  # Lets you run manually
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Streamlit app
+        run: |
+          curl -s -o /dev/null -w "%{http_code}\n" https://blackscholes-bena.streamlit.app/
