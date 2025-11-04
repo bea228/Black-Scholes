@@ -1,0 +1,23 @@
+name: Dummy Commit Redeploy
+
+on:
+  schedule:
+    - cron: "0 9 * * *"   # every day at 9 AM UTC
+  workflow_dispatch:        # lets you run manually too
+
+jobs:
+  keep_alive:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Make dummy commit
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          echo "Keep alive $(date)" > keepalive.txt
+          git add keepalive.txt
+          git commit -m "Keep alive $(date)" || echo "No changes to commit"
+          git push
